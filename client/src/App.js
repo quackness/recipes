@@ -1,15 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import CategoriesList from './components/CategoriesList';
+import IngredientsList from './components/IngredientsList';
+import Newcategory from './components/NewCategory';
+import NewRecipe from './components/NewRecipe';
+import NewIngredient from './components/NewIngredient';
+import RecipesList from './components/RecipesList';
+
 
 function App() {
   return (
     <div className="App">
-      New recipe
-      New category
-      New ingredient
-      Recepies list
-      Categories list
-      Ingredients list
+      <RecipesList />
+      <CategoriesList />
+      <IngredientsList />
+      <NewRecipe />
+      <Newcategory />
+      <NewIngredient />
     </div>
   );
 }
