@@ -1,5 +1,9 @@
-export default function RecipesList() {
+export default function RecipesList(props) {
+
+  const {recipes} = props;
+
   return (
+    <>
     <div>
       Recipes List:
       <table className="table">
@@ -14,14 +18,19 @@ export default function RecipesList() {
           </tr>
         </thead>
         <tbody>
-          <td>pic</td>
-          <td>not</td>
-          <td>Ings</td>
-          <td>here</td>
+          {recipes.map(recipe => 
+           <tr>
+          <td>{recipe.picture}</td>
+          <td>{recipe.title}</td>
+          <td>{recipe.ingredients}</td>
+          <td>{recipe.description}</td>
           <td>Edit button</td>
           <td>Delete button</td>
+          </tr>
+          )}
         </tbody>
       </table>
     </div>
+    </>
   );
 }
