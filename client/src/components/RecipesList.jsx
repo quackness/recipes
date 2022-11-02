@@ -1,9 +1,18 @@
+import axios from 'axios';
+
 export default function RecipesList(props) {
 
-  const {recipes} = props;
+  const {recipes, setRecipes} = props;
+
+  const deleteRecipe = function(id) {
+    return axios.delete(`http://localhost:8001/recipes/delete/${id}`)
+      .then(res => {
+        setRecipes(recipes.filter(recipe => recipe.id !== id))
+        console.log("Recipe deleted id:", id)
+      })
+  }
 
   return (
-    <>
     <div>
       Recipes CRUD App
       <table className="table">
@@ -25,12 +34,11 @@ export default function RecipesList(props) {
           <td>{recipe.description}</td>
           <td>{recipe.ingredients.toString()}</td>
           <td><button type="button" class="btn btn-success">Edit</button></td>
-          <td><button type="button" className="btn btn-danger">Delete</button></td>
+          <td><button type="button" className="btn btn-danger" onClick={() => deleteRecipe(recipe.id)}> Delete</button></td>
           </tr>
           )}
         </tbody>
       </table>
     </div>
-    </>
   );
 }
