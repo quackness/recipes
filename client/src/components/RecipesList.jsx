@@ -7,6 +7,7 @@ export default function RecipesList() {
           <tr>
             <th>Picture</th>
             <th>Name</th>
+            <th>Ingredients List</th>
             <th>Description</th>
             <th>Edit</th>
             <th>Remove</th>
@@ -15,6 +16,7 @@ export default function RecipesList() {
         <tbody>
           <td>pic</td>
           <td>not</td>
+          <td>Ings</td>
           <td>here</td>
           <td>Edit button</td>
           <td>Delete button</td>
