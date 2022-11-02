@@ -11,8 +11,8 @@ export default function RecipesList(props) {
           <tr>
             <th>Picture</th>
             <th>Name</th>
-            <th>Ingredients List</th>
             <th>Description</th>
+            <th>Ingredients List</th>
             <th>Edit</th>
             <th>Remove</th>
           </tr>
@@ -22,10 +22,10 @@ export default function RecipesList(props) {
            <tr key={recipe.id}>
           <td><img src={recipe.picture} className="rounded float-start img_recipe img-fluid" alt="recipe" /></td>
           <td>{recipe.title}</td>
-          <td>{recipe.ingredients.toString()}</td>
           <td>{recipe.description}</td>
-          <td>Edit button</td>
-          <td>Delete button</td>
+          <td>{recipe.ingredients.toString()}</td>
+          <td><button type="button" class="btn btn-success">Edit</button></td>
+          <td><button type="button" className="btn btn-danger">Delete</button></td>
           </tr>
           )}
         </tbody>
