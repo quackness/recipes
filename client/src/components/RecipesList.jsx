@@ -5,7 +5,7 @@ export default function RecipesList(props) {
   const {recipes, setRecipes} = props;
 
   const deleteRecipe = function(id) {
-    return axios.delete(`http://localhost:8001/recipes/delete/${id}`)
+    return axios.delete(`http://localhost:8001/recipes_delete/${id}`)
       .then(res => {
         setRecipes(recipes.filter(recipe => recipe.id !== id))
         console.log("Recipe deleted id:", id)
