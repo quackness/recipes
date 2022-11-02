@@ -38,7 +38,7 @@ app.get('/categories', async (req, res) => {
 });
 
 
-app.delete('/recipes/delete/:id', async (req, res) => {
+app.delete('/recipes_delete/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id)
     console.log("Deleted recepie id:", id);
