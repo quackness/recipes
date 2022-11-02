@@ -31,10 +31,8 @@ function App() {
     <div className="App">
       <RecipesList recipes={recipes}/>
       <CategoriesList categories={categories}/>
-      <IngredientsList />
       <NewRecipe />
       <Newcategory />
-      <NewIngredient />
     </div>
   );
 }
