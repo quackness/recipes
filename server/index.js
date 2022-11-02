@@ -13,7 +13,12 @@ app.listen(PORT, () => {
 app.get('/recipes', async (req, res) => {
   try {
     const getAllrecipes = await pool.query(
-      'SELECT categories.name AS category, recipes.id, recipes.title, recipes.description, recipes.category_id, recipes.picture FROM recipes JOIN categories ON recipes.category_id = categories.id'
+      `SELECT categories.name AS category, recipes.id, recipes.title, recipes.description, recipes.category_id, recipes.picture, array_agg(ingredients.name) AS ingredients
+      FROM recipes 
+      JOIN categories ON recipes.category_id = categories.id
+      JOIN recipe_ingredients ON recipe_ingredients.recipe_id = recipes.id
+      JOIN ingredients ON recipe_ingredients.ingredient_id = ingredients.id
+      GROUP by categories.name, recipes.id`
     );
     res.json(getAllrecipes.rows);
   } catch (err) {
