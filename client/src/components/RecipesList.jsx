@@ -5,7 +5,7 @@ export default function RecipesList(props) {
   return (
     <>
     <div>
-      Recipes List:
+      Recipes CRUD App
       <table className="table">
         <thead>
           <tr>
