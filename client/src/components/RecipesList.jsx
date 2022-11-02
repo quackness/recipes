@@ -19,10 +19,10 @@ export default function RecipesList(props) {
         </thead>
         <tbody>
           {recipes.map(recipe => 
-           <tr>
+           <tr key={recipe.id}>
           <td><img src={recipe.picture} className="rounded float-start img_recipe img-fluid" alt="recipe" /></td>
           <td>{recipe.title}</td>
-          <td>{recipe.ingredients}</td>
+          <td>{recipe.ingredients.toString()}</td>
           <td>{recipe.description}</td>
           <td>Edit button</td>
           <td>Delete button</td>
