@@ -10,7 +10,7 @@ import axios from 'axios';
 
 function App() {
   const [recipes, setRecipes] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     axios.get(`http://localhost:8001/recipes`)
@@ -19,10 +19,18 @@ function App() {
       })
   }, [])
 
+  useEffect(() => {
+    axios.get(`http://localhost:8001/categories`)
+      .then(function(res) {
+        setCategories([...res.data])
+      })
+  }, [])
+
+
   return (
     <div className="App">
       <RecipesList recipes={recipes}/>
-      <CategoriesList />
+      <CategoriesList categories={categories}/>
       <IngredientsList />
       <NewRecipe />
       <Newcategory />
