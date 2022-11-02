@@ -25,3 +25,14 @@ app.get('/recipes', async (req, res) => {
     console.error(err.message)
   }
 });
+
+app.get('/categories', async (req, res) => {
+  try {
+    const getAllCategories = await pool.query(
+      `SELECT * FROM categories;`
+    );
+    res.json(getAllCategories.rows);
+  } catch (err) {
+    console.error(err.message)
+  }
+});
