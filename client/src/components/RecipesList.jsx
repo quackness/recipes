@@ -20,7 +20,7 @@ export default function RecipesList(props) {
         <tbody>
           {recipes.map(recipe => 
            <tr>
-          <td>{recipe.picture}</td>
+          <td><img src={recipe.picture} className="rounded float-start img_recipe img-fluid" alt="recipe" /></td>
           <td>{recipe.title}</td>
           <td>{recipe.ingredients}</td>
           <td>{recipe.description}</td>
