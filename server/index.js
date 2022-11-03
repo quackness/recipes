@@ -47,12 +47,12 @@ app.delete('/recipes_delete/:id', async (req, res) => {
       WHERE id = $1 RETURNING *`, [id]
     )
     res.json("deleted")
-  } catch(err) {
+  } catch (err) {
     console.error(error.message)
   }
 });
 
-app.delete('/category_delete/:id', async(req, res) => {
+app.delete('/category_delete/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id)
     console.log("category removed id:", id);
@@ -61,7 +61,22 @@ app.delete('/category_delete/:id', async(req, res) => {
       WHERE id = $1 RETURNING *`, [id]
     )
     res.json("deleted")
-  } catch(err) {
+  } catch (err) {
     console.error(err.message)
   }
 });
+
+
+app.post('/recipes', async (req, res) => {
+  try {
+    const { title, description, category_id, picture } = req.body;
+    console.log("req.body", req.body)
+    const recipe = await pool.query(
+      `INSERT INTO recipes(title, description, category_id, picture)
+      VALUES ($1, $2, $3, $4) RETURNING *`, [title, description, category_id, picture]
+    )
+    res.json(recipe[0])
+  } catch (err) {
+    console.error(err.message)
+  }
+})
