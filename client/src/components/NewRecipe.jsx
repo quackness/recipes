@@ -18,9 +18,11 @@ export default function NewRecipe() {
         <label for="add_title">Recipe name</label>
         <input className="form-control" type="text" name="add_title"></input>
         <label for="add_description">Recipe description</label>
-        <input className="form-control" type="text" name="add_description"></input>
+        <input className="form-control" type="textarea" name="add_description"></input>
         <label for="add_picture">Recipe picture</label>
         <input className="form-control" type="url" name="add_picture"></input>
+        <label for="add_category">Choose a category</label>
+        <input className="form-control" type="text" name="add_category"></input>
       
 
 
