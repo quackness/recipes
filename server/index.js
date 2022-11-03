@@ -51,3 +51,17 @@ app.delete('/recipes_delete/:id', async (req, res) => {
     console.error(error.message)
   }
 });
+
+app.delete('/category_delete/:id', async(req, res) => {
+  try {
+    const id = parseInt(req.params.id)
+    console.log("category removed id:", id);
+    const deleteCategory = await pool.query(
+      `DELETE FROM categories
+      WHERE id = $1 RETURNING *`, [id]
+    )
+    res.json("deleted")
+  } catch(err) {
+    console.error(err.message)
+  }
+});
