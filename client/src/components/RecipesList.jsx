@@ -32,7 +32,7 @@ export default function RecipesList(props) {
           <td><img src={recipe.picture} className="rounded float-start img_recipe img-fluid" alt="recipe" /></td>
           <td>{recipe.title}</td>
           <td>{recipe.description}</td>
-          <td>{recipe.ingredients.toString()}</td>
+          <td>{recipe.ingredients.join(", ")}</td>
           <td><button type="button" class="btn btn-success">Edit</button></td>
           <td><button type="button" className="btn btn-danger" onClick={() => deleteRecipe(recipe.id)}> Delete</button></td>
           </tr>
