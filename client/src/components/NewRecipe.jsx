@@ -6,8 +6,40 @@ export default function NewRecipe(props) {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const [picture, setPicture] = useState("");
+
+  const submitForm = function(e) {
+    e.preventDefault();
+    const recipe = {
+      title,
+      description,
+      categoryId,
+      picture
+    }
+    addRecipe(recipe);
+    resetForm();
+  }
+
+  const addRecipe = function(recipe) {
+    console.log("Recipe added:", recipe)
+    return axios.post(`http://localhost:8001/recipes`, recipe)
+    .then((response) => {
+      const newRecipe = response.data;
+      console.log("newRec", newRecipe)
+      const recipeCategory = categories.find((category) => {
+        console.log(category.id === newRecipe.category)
+      })
+      // newRecipe.category = recipeCategory.???
+      setRecipes([newRecipe, ...recipes])
+    })
+  }
+
+  const resetForm = function() {
+    setTitle("")
+    setDescription("")
+    setPicture("")
+  }
 
   return (
     <div>
@@ -61,6 +93,22 @@ export default function NewRecipe(props) {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></input>
+              
+              <label for="add_category">Choose a category</label>
+              <select
+                className="form-control"
+                value={categoryId}
+                onChange={(e) => setCategoryId(e.target.value)}
+              >
+                {categories.map(category => 
+                  <option 
+                    key={category.id} 
+                    value={category.id}>
+                    {category.name}
+                  </option>
+                )}
+              </select>
+
               <label for="add_picture">Recipe picture</label>
               <input
                 className="form-control"
@@ -69,30 +117,18 @@ export default function NewRecipe(props) {
                 value={picture}
                 onChange={(e) => setPicture(e.target.value)}
               ></input>
-              <label for="add_category">Choose a category</label>
-              <select
-                className="form-control"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
               
             </div>
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Cancel
               </button>
-              <button type="button" class="btn btn-primary">
-                Add
+              <button type="button" class="btn btn-primary" onClick={submitForm}>
+                Add a recipe
               </button>
             </div>
           </div>
