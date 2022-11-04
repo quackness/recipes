@@ -6,7 +6,7 @@ export default function NewRecipe(props) {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [categoryId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState(1);
   const [picture, setPicture] = useState("");
 
   const submitForm = function(e) {
@@ -24,15 +24,19 @@ export default function NewRecipe(props) {
   const addRecipe = function(recipe) {
     console.log("Recipe added:", recipe)
     return axios.post(`http://localhost:8001/recipes`, recipe)
-    .then((response) => {
-      const newRecipe = response.data;
-      console.log("newRec", newRecipe)
-      const recipeCategory = categories.find((category) => {
-        console.log(category.id === newRecipe.category)
+      .then((response) => {
+        const newRecipe = response.data;
+        console.log("response.data", response.data)
+        console.log("newRec", newRecipe)
+        const recipeCategory = categories.find((category) => {
+          // console.log("this", category.id === newRecipe.category_id)
+          return category.id === newRecipe.category_id
+        })
+        console.log("newRecipe>",newRecipe)
+        console.log("category>", recipeCategory)
+        newRecipe.name = recipeCategory.name
+        setRecipes([newRecipe, ...recipes])
       })
-      // newRecipe.category = recipeCategory.???
-      setRecipes([newRecipe, ...recipes])
-    })
   }
 
   const resetForm = function() {
