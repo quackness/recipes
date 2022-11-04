@@ -69,13 +69,13 @@ app.delete('/category_delete/:id', async (req, res) => {
 
 app.post('/recipes', async (req, res) => {
   try {
-    const { title, description, category_id, picture } = req.body;
-    console.log("req.body", req.body)
-    const recipe = await pool.query(
+    const { title, description, categoryId, picture } = req.body;
+    console.log("req.body is:", req.body)
+ 
+    const newRecipe = await pool.query(
       `INSERT INTO recipes(title, description, category_id, picture)
-      VALUES ($1, $2, $3, $4) RETURNING *`, [title, description, category_id, picture]
-    )
-    res.json(recipe[0])
+      VALUES ($1, $2, $3, $4) RETURNING *`, [title, description, categoryId, picture])
+    res.json(newRecipe.rows[0]);
   } catch (err) {
     console.error(err.message)
   }
