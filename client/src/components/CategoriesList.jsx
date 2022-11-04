@@ -3,14 +3,6 @@ import axios from "axios";
 export default function CategoriesList(props) {
   const { categories, setCategories } = props;
 
-  // const deleteCategory = function (id) {
-  //   return axios.delete(`http://localhost:8001/category_delete/${id}`)
-  //       .then(res => {
-  //       setCategories(categories.filter(category => category.id !== id));
-  //       console.log("Category deleted id:", id);
-  //     });
-  // };
-
   const deleteCategory = function(id) {
     return axios.delete(`http://localhost:8001/category_delete/${id}`)
       .then(res => {
@@ -18,20 +10,6 @@ export default function CategoriesList(props) {
         console.log("Category deleted id:", id)
       })
   }
-
-  // const deleteRecipe = function(id) {
-  //   return axios.delete(`http://localhost:8001/recipes_delete/${id}`)
-  //     .then(res => {
-  //       setRecipes(recipes.filter(recipe => recipe.id !== id))
-  //       console.log("Recipe deleted id:", id)
-  //     })
-  // }
-
-
-
-
-
-
 
   return (
     <div>
