@@ -31,7 +31,7 @@ function App() {
     <div className="App">
       <RecipesList recipes={recipes} setRecipes={setRecipes}/>
       <CategoriesList categories={categories} setCategories={setCategories}/>
-      <NewRecipe />
+      <NewRecipe recipes={recipes} setRecipes={setRecipes} categories={categories}/>
       <Newcategory />
     </div>
   );
