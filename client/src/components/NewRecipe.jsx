@@ -9,13 +9,13 @@ export default function NewRecipe(props) {
   const [categoryId, setCategoryId] = useState(1);
   const [picture, setPicture] = useState("");
 
-  const submitForm = function (e) {
+  const submitForm = function(e) {
     e.preventDefault();
     const recipe = {
       title,
       description,
       categoryId,
-      picture,
+      picture
     };
     addRecipe(recipe);
     resetForm();
@@ -23,6 +23,7 @@ export default function NewRecipe(props) {
 
   const addRecipe = function (recipe) {
     console.log("Recipe added:", recipe);
+    recipe.ingredients = [{id: 1, name: "hardcoded"}];
     return axios
       .post(`http://localhost:8001/recipes`, recipe)
       .then((response) => {

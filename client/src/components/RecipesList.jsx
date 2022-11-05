@@ -38,7 +38,7 @@ export default function RecipesList(props) {
               </td>
               <td>{recipe.title}</td>
               <td>{recipe.description}</td>
-              {/* <td>{recipe.ingredients.join(", ")}</td> */}
+              <td>{recipe.ingredients.join(", ")}</td>
               <td>
                 <button type="button" class="btn btn-success">
                   Edit
@@ -50,7 +50,6 @@ export default function RecipesList(props) {
                   className="btn btn-danger"
                   onClick={() => deleteRecipe(recipe.id)}
                 >
-                  {" "}
                   Delete
                 </button>
               </td>
