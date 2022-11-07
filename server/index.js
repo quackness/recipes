@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const pool = require('./db');
+const format = require('pg-format');
 
 const app = express();
 app.use(cors());
@@ -15,12 +16,14 @@ app.get('/recipes', async (req, res) => {
     const getAllrecipes = await pool.query(
       `SELECT categories.name AS category, recipes.id, recipes.title, recipes.description, recipes.category_id, recipes.picture, array_agg(ingredients.name) AS ingredients
       FROM recipes 
-      JOIN categories ON recipes.category_id = categories.id
-      JOIN recipe_ingredients ON recipe_ingredients.recipe_id = recipes.id
-      JOIN ingredients ON recipe_ingredients.ingredient_id = ingredients.id
+      LEFT JOIN categories ON recipes.category_id = categories.id
+      LEFT JOIN recipe_ingredients ON recipe_ingredients.recipe_id = recipes.id
+      LEFT JOIN ingredients ON recipe_ingredients.ingredient_id = ingredients.id
       GROUP by categories.name, recipes.id`
     );
+    console.log(getAllrecipes.rows)
     res.json(getAllrecipes.rows);
+    
   } catch (err) {
     console.error(err.message)
   }
@@ -69,13 +72,26 @@ app.delete('/category_delete/:id', async (req, res) => {
 
 app.post('/recipes', async (req, res) => {
   try {
-    const { title, description, categoryId, picture } = req.body;
+    const { title, description, categoryId, picture, ingredients } = req.body;
     console.log("req.body is:", req.body)
- 
+    //into recipie ingredients the new recipie id and the posted ingredents
+    //insert into recipies
     const newRecipe = await pool.query(
       `INSERT INTO recipes(title, description, category_id, picture)
       VALUES ($1, $2, $3, $4) RETURNING *`, [title, description, categoryId, picture])
-    res.json(newRecipe.rows[0]);
+    //get recipie id, 
+    //what is my new recipie id
+    //then insert 
+    const recepieId = newRecipe.rows[0].id;
+    const data = ingredients.map(ingredient => {
+      return [recepieId, ingredient.id]
+    })
+    const manyToManyEntry = await pool.query(
+      format(`INSERT INTO recipe_ingredients(recipe_id, ingredient_id)
+      VALUES %L RETURNING *`, data));
+    //build a new object that is the new recipie and return it
+      newRecipe.rows[0].ingredients = ingredients;
+      res.json(newRecipe.rows[0]); // res.json(newObject)
   } catch (err) {
     console.error(err.message)
   }
