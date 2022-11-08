@@ -1,9 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
+import Select from "react-select";
 
 export default function NewRecipe(props) {
   const { recipes, categories, setRecipes, ingredients} = props;
 
+  let mappedIngredients = ingredients.map(ingredient => {
+    // console.log(ingredient);
+    return {value: ingredient.id, label: ingredient.name}
+  } )
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState(1);
@@ -16,7 +21,8 @@ export default function NewRecipe(props) {
       title,
       description,
       categoryId,
-      picture
+      picture, 
+      ingredientId
     };
     addRecipe(recipe);
     resetForm();
@@ -121,25 +127,13 @@ export default function NewRecipe(props) {
                 value={picture}
                 onChange={(e) => setPicture(e.target.value)}
               ></input>
-
               <label for="add_ingredient">Ingredients</label>
-              <select
+              <Select
               className="form-control"
-              value={ingredientId}
-              onChange={e => setIngredientId(e.target.value)}
-              >
-                {ingredients.map((ingredient) => (
-                  <option key={ingredient.id} value={ingredient.id}>
-                    {ingredient.name}
-                  </option>
-
-                )
-                  )}
-              </select>
-
-
-
-
+              options={mappedIngredients}
+              isMulti
+              onChange={setIngredientId}
+              />
             </div>
             <div class="modal-footer">
               <button
