@@ -11,6 +11,7 @@ import axios from 'axios';
 function App() {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [ingredients, setIngredients]= useState([]);
 
   useEffect(() => {
     axios.get(`http://localhost:8001/recipes`)
@@ -26,12 +27,19 @@ function App() {
       })
   }, [])
 
+  useEffect(() => {
+    axios.get(`http://localhost:8001/ingredients`)
+      .then(function(res) {
+        setIngredients([...res.data])
+      })
+  }, [])
+
 
   return (
     <div className="App">
       <RecipesList recipes={recipes} setRecipes={setRecipes}/>
       <CategoriesList categories={categories} setCategories={setCategories}/>
-      <NewRecipe recipes={recipes} setRecipes={setRecipes} categories={categories}/>
+      <NewRecipe recipes={recipes} setRecipes={setRecipes} categories={categories} ingredients={ingredients}/>
       <Newcategory />
     </div>
   );
