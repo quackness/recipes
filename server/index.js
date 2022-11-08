@@ -40,6 +40,21 @@ app.get('/categories', async (req, res) => {
   }
 });
 
+app.get('/ingredients', async (req, res) => {
+  try {
+    const getAllingredients = await pool.query(
+      `SELECT * FROM ingredients;`
+    );
+    res.json(getAllingredients.rows);
+  } catch(err) {
+    console.error(err.message)
+  }
+})
+
+
+
+
+
 
 app.delete('/recipes_delete/:id', async (req, res) => {
   try {
