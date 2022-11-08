@@ -2,12 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function NewRecipe(props) {
-  const { recipes, categories, setRecipes } = props;
+  const { recipes, categories, setRecipes, ingredients} = props;
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState(1);
   const [picture, setPicture] = useState("");
+  const [ingredientId, setIngredientId] = useState("");
 
   const submitForm = function(e) {
     e.preventDefault();
@@ -120,6 +121,25 @@ export default function NewRecipe(props) {
                 value={picture}
                 onChange={(e) => setPicture(e.target.value)}
               ></input>
+
+              <label for="add_ingredient">Ingredients</label>
+              <select
+              className="form-control"
+              value={ingredientId}
+              onChange={e => setIngredientId(e.target.value)}
+              >
+                {ingredients.map((ingredient) => (
+                  <option key={ingredient.id} value={ingredient.id}>
+                    {ingredient.name}
+                  </option>
+
+                )
+                  )}
+              </select>
+
+
+
+
             </div>
             <div class="modal-footer">
               <button
