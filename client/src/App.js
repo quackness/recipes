@@ -17,6 +17,7 @@ function App() {
     axios.get(`http://localhost:8001/recipes`)
       .then(function(res) {
         setRecipes([...res.data])
+        setIngredients([...res.data])
       })
   }, [])
 
