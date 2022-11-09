@@ -97,15 +97,22 @@ app.post('/recipes', async (req, res) => {
     //get recipie id, 
     //what is my new recipie id
     //then insert 
+    console.log("rows", newRecipe.rows[0].id)
     const recepieId = newRecipe.rows[0].id;
+    console.log("recepieId", recepieId)
+    // let ingredients = ingredientId
     const data = ingredients.map(ingredient => {
       return [recepieId, ingredient.id]
     })
     const manyToManyEntry = await pool.query(
       format(`INSERT INTO recipe_ingredients(recipe_id, ingredient_id)
       VALUES %L RETURNING *`, data));
-    //build a new object that is the new recipie and return it
-      newRecipe.rows[0].ingredients = ingredients;
+    //build a new object that is the new recipie and return it with ingredients
+      newRecipe.rows[0].ingredients = ingredients.map((ingredient) => {
+    //creating a new key in the newRecipe object and assigning a value of the array with ingredient.name 
+        return ingredient.name
+      });
+      console.log("rows", newRecipe.rows[0])
       res.json(newRecipe.rows[0]); // res.json(newObject)
   } catch (err) {
     console.error(err.message)
