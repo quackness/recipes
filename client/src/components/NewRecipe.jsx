@@ -3,17 +3,22 @@ import axios from "axios";
 import Select from "react-select";
 
 export default function NewRecipe(props) {
-  const { recipes, categories, setRecipes, ingredients} = props;
+  const { recipes, categories, setRecipes, loadedIngredients} = props;
 
-  let mappedIngredients = ingredients.map(ingredient => {
+  let mappedIngredients = loadedIngredients.map(ingredient => {
     // console.log(ingredient);
     return {value: ingredient.id, label: ingredient.name}
   } )
+
+  let mappedCategories = categories.map(category => {
+    return {value: category.id, label: category.name}
+  })
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState(1);
   const [picture, setPicture] = useState("");
-  const [ingredientId, setIngredientId] = useState("");
+  const [ingredients, setIngredientId] = useState([]);
 
   const submitForm = function(e) {
     e.preventDefault();
@@ -22,7 +27,7 @@ export default function NewRecipe(props) {
       description,
       categoryId,
       picture, 
-      ingredientId
+      ingredients
     };
     addRecipe(recipe);
     resetForm();
@@ -30,7 +35,8 @@ export default function NewRecipe(props) {
 
   const addRecipe = function (recipe) {
     console.log("Recipe added:", recipe);
-    recipe.ingredients = [{id: 1, name: "hardcoded"}];
+    recipe.categoryId = categoryId.value;
+    recipe.ingredients = ingredients;
     return axios
       .post(`http://localhost:8001/recipes`, recipe)
       .then((response) => {
@@ -106,7 +112,7 @@ export default function NewRecipe(props) {
                 onChange={(e) => setDescription(e.target.value)}
               ></input>
 
-              <label for="add_category">Choose a category</label>
+              {/* <label for="add_category">Choose a category</label>
               <select
                 className="form-control"
                 value={categoryId}
@@ -117,7 +123,15 @@ export default function NewRecipe(props) {
                     {category.name}
                   </option>
                 ))}
-              </select>
+              </select> */}
+
+
+              <label for="add_category">Category</label>
+              <Select
+              className="form-control"
+              options={mappedCategories}
+              onChange={setCategoryId}
+              />
 
               <label for="add_picture">Recipe picture</label>
               <input
@@ -132,7 +146,10 @@ export default function NewRecipe(props) {
               className="form-control"
               options={mappedIngredients}
               isMulti
-              onChange={setIngredientId}
+              onChange={(e => {
+                console.log(e);
+                setIngredientId(e.map(element => ({id: element.value, name: element.label})))
+              })}
               />
             </div>
             <div class="modal-footer">
